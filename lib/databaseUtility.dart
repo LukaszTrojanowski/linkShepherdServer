@@ -13,10 +13,10 @@ class DatabaseUtility {
     print(uri);
   }
   
-  insertIntoUsers(Map values){
+  createUser(Map values){
     connect(uri)
     .then((conn){
-      conn.execute('insert into users values(@login, @password)', values)
+      conn.execute('insert into users values(@login, @password, now(), now())', values)
         .then((_) => conn.close());
     })
     .catchError(print);

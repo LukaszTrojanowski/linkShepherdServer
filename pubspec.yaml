@@ -6,5 +6,10 @@ environment:
 dependencies:
   http_server: any
   postgresql: any
+  shelf: any
+  shelf_exception_response: any
+  shelf_route: any
+  shelf_static: any
+  shelf_auth: any
 dev_dependencies:
   unittest: any
