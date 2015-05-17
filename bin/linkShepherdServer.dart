@@ -8,14 +8,23 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
 
-import '../lib/databaseUtility.dart';
 import '../lib/routes.dart';
 
 VirtualDirectory virDir;
 
 main() {
-    DatabaseUtility dbUtil = new DatabaseUtility('postgres', 'kewoziwa', 'linkShepherdDB');
-    dbUtil.createUser({'login': 'dartUser', 'password': 'passMePlease'});
+    //DatabaseUtility dbUtil = new DatabaseUtility('postgres', 'kewoziwa', 'linkShepherdDB');
+    //dbUtil.createUser({'login': 'anonymous', 'password': 'muotGKzenuasXvhyPuocUHxMaShuxsKfAXUvDuxSGmBiIOVXB'});
+    //dbUtil.defineTag({'tag': 'testTag', 'description':'This tag is a test tag for testing'});
+    //@title, @description, now(), now(), @user, @editor, @upVotes, @downVotes, @flag
+    //dbUtil.addPost({'title': 'Sample title', 'description': 'This is a description for a sample post', 'user': 'dartUser', 'editor': 'dartUser', 'links_to': 'http://google.com'});
+    //dbUtil.addPost({'title': 'Sample title', 'description': 'This is a description for a sample post', 'user': 'dartUser', 'editor': 'dartUser', 'links_to': 'http://google.com'}, [{'tag':'testTag'}]);
+    //dbUtil.addPost({'title': 'Sample title', 'description': 'This is a description for a sample post', 'user': 'dartUser', 'editor': 'dartUser', 'links_to': 'http://google.com'}, [{'tag':'testTag'}, {'tag':'testTag2'}]);
+    //dbUtil.getPostsByTags(0, 10, 'posted_at', ['testTag', 'testTag2']).then((posts) {
+    //  for (var post in posts) {
+    //    print(post.tags);
+    //  }
+    //});
     //initVirDir();
     runServer();
 }
@@ -24,11 +33,7 @@ main() {
  *  Code to handle Http Requests
  */
 runServer() {
-  var staticHandler = createStaticHandler(r"C:\Users\Lukasz\dart\auctionProject\web", defaultDocument: 'auctionproject.html');
-  /*final shelf.Handler handler = const shelf.Pipeline()
-                                        .addMiddleware(shelf.logRequests())
-                                        .addHandler(routes.handler);
-  */
+  var staticHandler = createStaticHandler(r"C:\Users\Lukasz\dart\linkShepherdClient\web\", defaultDocument: 'linkShepherd.html',serveFilesOutsidePath: true);
   var handler = new Cascade()
                       .add(staticHandler)
                       .add(routes.handler)
@@ -37,34 +42,5 @@ runServer() {
     print('Listening on port 8080');
   }).catchError((error) => print(error));
       
-}
+}/* end of code handling Http Requests */
 
-/*shelf.Response handleAnyRequest(shelf.Request request) {
-  switch (request.method) {
-    case 'GET':
-      handleGetRequest(request);
-      break;
-    case 'POST':
-      handlePostRequest(request);
-      break;
-    default: defaultRequestHandler(request);
-  }
-}
-
-handleGetRequest(shelf.Request req) {
-  print('got GET request');
-  virDir.serveRequest(req);
-}
-
-handlePostRequest(HttpRequest req) {
-  print('got POST request');
-  
-}
-
-// place for other request types
-
-defaultRequestHandler(HttpRequest req){
-  print('some unhandled request!!!\n');
-} */
-
-/* end of code handling Http Requests */

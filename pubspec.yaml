@@ -11,5 +11,7 @@ dependencies:
   shelf_route: any
   shelf_static: any
   shelf_auth: any
+  linkShepherdClient:
+    path: C:\Users\Lukasz\dart\linkShepherdClient
 dev_dependencies:
   unittest: any
