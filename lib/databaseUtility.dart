@@ -1,3 +1,5 @@
+library linkShepherdServer.databaseUtility;
+
 import 'dart:async';
 import 'package:postgresql/postgresql.dart';
 import 'post.dart';
@@ -109,6 +111,24 @@ class DatabaseUtility {
       .whenComplete(() => conn.close());
     })
     .catchError((err) => print('Error in getTagsForPosts'));
+  }
+  
+  Future getPostsHot(int limit, int offset, String order_by){
+    return connect(uri).then((conn){
+      String query = """select * from posts
+                  where posts.post_id in (select post_id
+                                          from votes_log
+                                          where voted_at >= now() - '1 day'::interval
+                                          group by votes_log.post_id)
+                  order by $order_by desc
+                  limit @limit offset @offset
+                  """;
+      return conn.query(query, {'limit': limit, 'offset': offset})
+              .map((row) => new Post.fromSQL(row.toList()))
+              .toList()
+      .whenComplete(() => conn.close());
+    })
+    .catchError((err) => print('Error in getPost: $err'));
   }
   
   Future getPostsByTags(int limit, int offset, String order_by, List<String> _values){

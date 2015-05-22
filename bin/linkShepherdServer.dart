@@ -10,10 +10,12 @@ import 'package:shelf_static/shelf_static.dart';
 
 import '../lib/routes.dart';
 
-VirtualDirectory virDir;
+import '../lib/databaseUtility.dart'; // remove this two after testing
+import 'dart:convert';
+import '../lib/post.dart';
 
 main() {
-    //DatabaseUtility dbUtil = new DatabaseUtility('postgres', 'kewoziwa', 'linkShepherdDB');
+//    DatabaseUtility dbUtil = new DatabaseUtility('postgres', 'kewoziwa', 'linkShepherdDB');
     //dbUtil.createUser({'login': 'anonymous', 'password': 'muotGKzenuasXvhyPuocUHxMaShuxsKfAXUvDuxSGmBiIOVXB'});
     //dbUtil.defineTag({'tag': 'testTag', 'description':'This tag is a test tag for testing'});
     //@title, @description, now(), now(), @user, @editor, @upVotes, @downVotes, @flag
@@ -21,11 +23,21 @@ main() {
     //dbUtil.addPost({'title': 'Sample title', 'description': 'This is a description for a sample post', 'user': 'dartUser', 'editor': 'dartUser', 'links_to': 'http://google.com'}, [{'tag':'testTag'}]);
     //dbUtil.addPost({'title': 'Sample title', 'description': 'This is a description for a sample post', 'user': 'dartUser', 'editor': 'dartUser', 'links_to': 'http://google.com'}, [{'tag':'testTag'}, {'tag':'testTag2'}]);
     //dbUtil.getPostsByTags(0, 10, 'posted_at', ['testTag', 'testTag2']).then((posts) {
-    //  for (var post in posts) {
-    //    print(post.tags);
-    //  }
+    //  print(JSON.encode(posts));
     //});
     //initVirDir();
+//    dbUtil.getPosts(10, 10, r'posted_at').then((posts){
+//      String jsonPosts = JSON.encode(posts);   
+//      print(jsonPosts);
+//      print(JSON.decode(jsonPosts));
+//      Map jsonPost = JSON.decode(jsonPosts)[0];
+//      print(jsonPost.runtimeType.toString());
+//      print(jsonPost['posted_at']);
+//      print(DateTime.parse(jsonPost['last_edited']).runtimeType.toString());
+//      Post samplePost = new Post.fromMap(jsonPost);
+//      print(samplePost.toHTML());
+//      //print(samplePost);
+//    });
     runServer();
 }
 

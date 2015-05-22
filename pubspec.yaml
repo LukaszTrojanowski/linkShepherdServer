@@ -5,13 +5,14 @@ environment:
   sdk: '>=1.0.0 <2.0.0'
 dependencies:
   http_server: any
+  linkShepherdClient:
+    path: ../linkShepherdClient
   postgresql: any
   shelf: any
+  shelf_auth: any
+  shelf_bind: any
   shelf_exception_response: any
   shelf_route: any
   shelf_static: any
-  shelf_auth: any
-  linkShepherdClient:
-    path: C:\Users\Lukasz\dart\linkShepherdClient
 dev_dependencies:
   unittest: any
