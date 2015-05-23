@@ -3,16 +3,17 @@
 
 //import 'package:auctionprojectServer/auctionprojectServer.dart' as auctionprojectServer;
 import 'dart:io';
-import 'package:http_server/http_server.dart' show VirtualDirectory; // probably to uncomment
-import 'package:shelf/shelf.dart';
+//import 'package:http_server/http_server.dart' show VirtualDirectory; // probably to uncomment
+import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
 
 import '../lib/routes.dart';
+import '../lib/cors.dart';
 
-import '../lib/databaseUtility.dart'; // remove this two after testing
-import 'dart:convert';
-import '../lib/post.dart';
+//import '../lib/databaseUtility.dart'; // remove this two after testing
+//import 'dart:convert';
+//import '../lib/post.dart';
 
 main() {
 //    DatabaseUtility dbUtil = new DatabaseUtility('postgres', 'kewoziwa', 'linkShepherdDB');
@@ -46,10 +47,15 @@ main() {
  */
 runServer() {
   var staticHandler = createStaticHandler(r"C:\Users\Lukasz\dart\linkShepherdClient\web\", defaultDocument: 'linkShepherd.html',serveFilesOutsidePath: true);
-  var handler = new Cascade()
+  
+  shelf.Pipeline pipeline = new shelf.Pipeline()
+                                        .addMiddleware(shelf.logRequests())
+                                        .addMiddleware(addCORSHeaders);
+  
+  var handler = pipeline.addHandler(new shelf.Cascade()
                       .add(staticHandler)
                       .add(routes.handler)
-                      .handler;
+                      .handler);
   io.serve(handler, InternetAddress.LOOPBACK_IP_V4, 8080).then((server) {
     print('Listening on port 8080');
   }).catchError((error) => print(error));

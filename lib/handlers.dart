@@ -49,7 +49,7 @@ Future<shelf.Response> handleHot(shelf.Request request) async {
 //code handling sessions and Login
 var testLookup = new TestUserLookup();
 
-var sessionHandler = new JwtSessionHandler('super app',new Uuid().v4(),testLookup.lookupByUsernamePassword);
+var sessionHandler = new JwtSessionHandler('super app',new Uuid().v4(),testLookup.lookupByUsername);
 
 //allow http for testing with curl. Don't use in production
 var allowHttp = true;
@@ -82,6 +82,7 @@ Future<shelf.Response> handleLogin(shelf.Request request) async {
 
 class TestUserLookup {
   Future<Option<Principal>> lookupByUsernamePassword(String username, String password) {
+    print('inside of user lookup');
     final validUser = username == 'fred';
     final principalOpt = validUser ? new Some(new Principal(username)) : const None();
     
